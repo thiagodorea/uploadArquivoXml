@@ -2,6 +2,7 @@ package com.tdorea.agentes.services;
 
 import com.tdorea.agentes.dto.AgentesDto;
 import com.tdorea.agentes.entities.Agentes;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -21,6 +22,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
+@Slf4j
 @Service
 public class UploadService {
     @Autowired
@@ -32,10 +34,9 @@ public class UploadService {
     final Path root = Paths.get("uploads");
 
     @Transactional
-    public String salvaArquivo(MultipartFile file) throws JAXBException, Exception {
+    public String salvaArquivo(MultipartFile file) throws RuntimeException{
         if(!Objects.equals(file.getContentType(), "application/xml"))
             throw new RuntimeException("Arquivo Inválido");
-
 
         iniciaDiretorio();
         salvaArquivoNoDiretorio(file);
@@ -47,14 +48,15 @@ public class UploadService {
             File xmlFile = new File(carregaArquivoDoDiretorio(file.getOriginalFilename()).getAbsoluteFile().toString());
 
             Agentes agentes = (Agentes) unmarshaller.unmarshal(xmlFile);
-            System.out.println(agentes);
+
             return String.valueOf(agentesService.salvaAgentes(new AgentesDto(agentes)));
         }catch (Exception e){
+            log.error("Erro ao salvar dados: Error " + e);
             throw new RuntimeException ("Erro ao salvar dados.");
         }
     }
 
-    private void iniciaDiretorio() {
+    private void iniciaDiretorio() throws RuntimeException{
         if (Files.notExists(root, LinkOption.NOFOLLOW_LINKS)) {
             try {
 
@@ -65,7 +67,7 @@ public class UploadService {
         }
     }
 
-    private void salvaArquivoNoDiretorio(MultipartFile file) {
+    private void salvaArquivoNoDiretorio(MultipartFile file) throws RuntimeException{
         if(Files.notExists(this.root.resolve(file.getOriginalFilename()))) {
             try {
                 Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
@@ -75,7 +77,7 @@ public class UploadService {
         }
     }
 
-    private File carregaArquivoDoDiretorio(String filename) {
+    private File carregaArquivoDoDiretorio(String filename) throws RuntimeException {
         try {
             Path file = root.resolve(filename);
             Resource resource = new UrlResource(file.toUri());

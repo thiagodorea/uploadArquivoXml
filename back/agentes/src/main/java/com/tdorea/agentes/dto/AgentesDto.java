@@ -11,6 +11,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -26,7 +27,7 @@ public class AgentesDto implements Serializable {
 
     private UUID id;
 
-    private Agente agente;
+    private List<Agente> agente;
 
     public AgentesDto(Agentes agentes) {
         this.id = agentes.getId();
