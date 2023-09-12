@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.xml.bind.JAXBException;
-
 
 @Slf4j
 @RestController
@@ -23,7 +21,7 @@ public class UploadController {
     private UploadService uploadService ;
 
     @PostMapping(value = "v1/xml" )
-    public ResponseEntity<String> salvaArquivoXml(@RequestParam("arquivo") MultipartFile file) throws JAXBException, Exception{
+    public ResponseEntity<String> salvaArquivoXml(@RequestParam("arquivo") MultipartFile file) throws  Exception{
         try{
             log.info("Recebendo o arquivo: " + file.getOriginalFilename() + " Tipo de arquivo: " + file.getContentType());
             return new ResponseEntity<>(uploadService.salvaArquivo(file), HttpStatus.CREATED);
