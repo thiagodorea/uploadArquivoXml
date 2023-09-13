@@ -11,7 +11,8 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.UUID;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Builder
 @ToString
@@ -24,7 +25,7 @@ public class CompraDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private UUID id;
+    private Long id;
 
     private ArrayList<Double> valor;
 

@@ -1,6 +1,5 @@
 package com.tdorea.agentes.dto;
 
-import com.tdorea.agentes.entities.Agente;
 import com.tdorea.agentes.entities.Agentes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +12,7 @@ import lombok.ToString;
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Builder
 @ToString
@@ -27,10 +27,10 @@ public class AgentesDto implements Serializable {
 
     private UUID id;
 
-    private List<Agente> agente;
+    private List<AgenteDto> agente;
 
     public AgentesDto(Agentes agentes) {
         this.id = agentes.getId();
-        this.agente = agentes.getAgente();
+        this.agente = agentes.getAgente().stream().map(AgenteDto::new).collect(Collectors.toList());
     }
 }

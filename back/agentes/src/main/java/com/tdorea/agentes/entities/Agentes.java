@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Builder
 @ToString
@@ -50,6 +51,6 @@ public class Agentes implements Serializable {
 
     public Agentes(AgentesDto agentesDto) {
         this.id = agentesDto.getId();
-        this.agente = agentesDto.getAgente();
+        this.agente = agentesDto.getAgente().stream().map(Agente::new).collect(Collectors.toList());
     }
 }

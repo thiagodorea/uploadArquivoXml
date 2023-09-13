@@ -11,7 +11,8 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.UUID;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Builder
 @ToString
@@ -24,12 +25,12 @@ public class PrecoMedioDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private UUID id;
+    private Long id;
 
     private ArrayList<Double> valor;
 
     public PrecoMedioDto(PrecoMedio precoMedio) {
         this.id = precoMedio.getId();
-        this.valor = precoMedio.getValor();
+        this.valor = null;
     }
 }

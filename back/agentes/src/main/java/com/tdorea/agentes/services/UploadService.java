@@ -45,6 +45,7 @@ public class UploadService {
             File xmlFile = new File(carregaArquivoDoDiretorio(file.getOriginalFilename()).getAbsoluteFile().toString());
             Agentes agentes = (Agentes) unmarshaller.unmarshal(xmlFile);
             deletaArquivoNoDiretorio(file.getOriginalFilename());
+            System.out.println(agentes);
             return String.valueOf(agentesService.salvaAgentes(new AgentesDto(agentes)));
         }catch (Exception e){
             log.error("Erro ao salvar dados: Error " + e);
