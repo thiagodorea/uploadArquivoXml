@@ -1,13 +1,9 @@
 package com.tdorea.agentes.controlles;
 
-import com.tdorea.agentes.dto.AgenteDto;
 import com.tdorea.agentes.dto.AgentesDto;
-import com.tdorea.agentes.services.AgenteService;
 import com.tdorea.agentes.services.AgentesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

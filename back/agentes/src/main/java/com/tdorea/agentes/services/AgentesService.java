@@ -4,8 +4,6 @@ import com.tdorea.agentes.dto.AgentesDto;
 import com.tdorea.agentes.entities.Agentes;
 import com.tdorea.agentes.repositories.AgentesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

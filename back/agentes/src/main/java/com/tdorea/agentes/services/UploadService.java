@@ -8,7 +8,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.xml.bind.JAXBContext;
@@ -45,7 +44,6 @@ public class UploadService {
             File xmlFile = new File(carregaArquivoDoDiretorio(file.getOriginalFilename()).getAbsoluteFile().toString());
             Agentes agentes = (Agentes) unmarshaller.unmarshal(xmlFile);
             deletaArquivoNoDiretorio(file.getOriginalFilename());
-            System.out.println(agentes);
             return String.valueOf(agentesService.salvaAgentes(new AgentesDto(agentes)));
         }catch (Exception e){
             log.error("Erro ao salvar dados: Error " + e);
