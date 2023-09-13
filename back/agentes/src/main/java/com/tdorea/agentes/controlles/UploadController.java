@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "upload", produces = {"application/json"})
+@RequestMapping(value = "upload")
 public class UploadController {
 
     @Autowired

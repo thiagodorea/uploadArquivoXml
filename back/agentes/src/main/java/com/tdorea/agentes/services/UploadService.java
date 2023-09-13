@@ -24,9 +24,6 @@ import java.util.Objects;
 @Service
 public class UploadService {
     @Autowired
-    private AgenteService agenteService;
-
-    @Autowired
     private AgentesService agentesService;
 
     final Path root = Paths.get("uploads");
@@ -44,7 +41,9 @@ public class UploadService {
             File xmlFile = new File(carregaArquivoDoDiretorio(file.getOriginalFilename()).getAbsoluteFile().toString());
             Agentes agentes = (Agentes) unmarshaller.unmarshal(xmlFile);
             deletaArquivoNoDiretorio(file.getOriginalFilename());
-            return String.valueOf(agentesService.salvaAgentes(new AgentesDto(agentes)));
+            agentesService.salvaAgentes(new AgentesDto(agentes));
+            agentes.getAgente().forEach(agente -> System.out.println("agente codigo: " + agente.getCodigo()));
+            return "Arquivo " + file.getOriginalFilename() + " salvo com sucesso.";
         }catch (Exception e){
             log.error("Erro ao salvar dados: Error " + e);
             throw new RuntimeException ("Erro ao salvar dados.");
@@ -88,12 +87,10 @@ public class UploadService {
 
     private void deletaArquivoNoDiretorio(String filename) {
         try {
-            boolean result = Files.deleteIfExists(this.root.resolve(filename));
-            if (result) {
-                System.out.println("O arquivo foi excluído com sucesso.");
-            }
-            else {
-                System.out.println("A exclusão do arquivo falhou. Arquivo não localizado.");
+            if (Files.deleteIfExists(this.root.resolve(filename))) {
+                log.info("O arquivo foi excluído com sucesso.");
+            } else {
+                log.error("A exclusão do arquivo falhou. Arquivo não localizado.");
             }
         }
         catch (IOException e) {
