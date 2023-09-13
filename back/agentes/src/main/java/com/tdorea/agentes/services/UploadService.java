@@ -41,8 +41,8 @@ public class UploadService {
             File xmlFile = new File(carregaArquivoDoDiretorio(file.getOriginalFilename()).getAbsoluteFile().toString());
             Agentes agentes = (Agentes) unmarshaller.unmarshal(xmlFile);
             deletaArquivoNoDiretorio(file.getOriginalFilename());
-            agentesService.salvaAgentes(new AgentesDto(agentes));
             agentes.getAgente().forEach(agente -> System.out.println("agente codigo: " + agente.getCodigo()));
+            agentesService.salvaAgentes(new AgentesDto(agentes));
             return "Arquivo " + file.getOriginalFilename() + " salvo com sucesso.";
         }catch (Exception e){
             log.error("Erro ao salvar dados: Error " + e);
